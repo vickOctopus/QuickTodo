@@ -1,0 +1,48 @@
+{
+  "source": "/Users/wangsongquan/DevProject/QuickTodo/QuickTodo/Views/PopoverView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "暂无待办事项",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "待办事项",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld 项未完成",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "退出",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "编辑",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 55
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,40 @@
+{
+  "source": "/Users/wangsongquan/DevProject/QuickTodo/QuickTodo/Views/StickyNoteView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "QuickTodo",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld 未完成",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "添加待办...",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 75
+        }
+      }
+    ]
+  },
+  "version": 1
+}
