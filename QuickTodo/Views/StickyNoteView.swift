@@ -14,17 +14,20 @@ struct StickyNoteView: View {
     @State private var editingText: String = ""
     @State private var isDeleteMode: Bool = false
     @State private var showDeleteAllConfirm: Bool = false
+    @State private var selectedId: UUID? = nil
     @FocusState private var focusedItemId: UUID?
     @State private var hoveredBtn: String? = nil
 
     var body: some View {
-        List {
+        List(selection: $selectedId) {
             ForEach(store.items) { item in
                 reminderRow(item)
+                    .tag(item.id)
             }
             .onMove { store.move(from: $0, to: $1) }
         }
         .listStyle(.plain)
+        .scrollContentBackground(.hidden)
         .overlay {
             if store.items.isEmpty {
                 VStack(spacing: 8) {
@@ -42,10 +45,12 @@ struct StickyNoteView: View {
                 toolbar.frame(height: 28)
                 Divider()
             }
-            .background(.windowBackground)
+            .background(.ultraThinMaterial)
+            .background(.ultraThinMaterial)
         }
         .ignoresSafeArea()
         .frame(minWidth: 260, minHeight: 320)
+        .background(.ultraThinMaterial)
         .confirmationDialog(
             "确定删除所有待办事项吗？",
             isPresented: $showDeleteAllConfirm,
@@ -91,7 +96,6 @@ struct StickyNoteView: View {
                         isDeleteMode = false
                     }
                 }
-                .pillContainer
             } else {
                 // 普通模式：「pin | trash | +」图标胶囊组
                 HStack(spacing: 0) {
@@ -117,7 +121,6 @@ struct StickyNoteView: View {
                     }
                     .help("新建待办事项")
                 }
-                .pillContainer
             }
         }
         .padding(.horizontal, 10)
@@ -208,18 +211,15 @@ struct StickyNoteView: View {
                     .textFieldStyle(.plain)
                     .disableAutocorrection(true)
                     .focused($focusedItemId, equals: item.id)
-                    .onSubmit { commitEdit(item) }
+                    .onSubmit { commitAndCreateNext(item) }
                     .onExitCommand { discardIfBlank(item) }
             } else {
                 Text(item.title)
                     .strikethrough(item.isCompleted && !isDeleteMode, color: .secondary)
                     .foregroundColor(item.isCompleted && !isDeleteMode ? .secondary : .primary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .onTapGesture(count: 2) {
+                    .onTapGesture {
                         guard !isDeleteMode else { return }
-                        editingId = item.id
-                        editingText = item.title
-                        DispatchQueue.main.async { focusedItemId = item.id }
+                        startEditing(item)
                     }
             }
         }
@@ -230,13 +230,50 @@ struct StickyNoteView: View {
 
     // MARK: - 操作
 
+    /// 开始编辑某条事项，会先提交当前正在编辑的内容
+    private func startEditing(_ item: TodoItem) {
+        if let prevId = editingId, prevId != item.id,
+           let prevItem = store.items.first(where: { $0.id == prevId }) {
+            commitEdit(prevItem)
+        }
+        editingId = item.id
+        editingText = item.title
+        DispatchQueue.main.async { focusedItemId = item.id }
+    }
+
+    /// 新建空白事项（插在已完成事项之前），并立即进入编辑
     private func addBlankAndEdit() {
-        let nextOrder = (store.items.map(\.order).max() ?? -1) + 1
-        let blank = TodoItem(title: "", order: nextOrder)
-        store.items.append(blank)
+        if let prevId = editingId, let prevItem = store.items.first(where: { $0.id == prevId }) {
+            commitEdit(prevItem)
+        }
+        let insertIdx = store.items.firstIndex(where: { $0.isCompleted }) ?? store.items.count
+        let blank = TodoItem(title: "", order: 0)
+        store.items.insert(blank, at: insertIdx)
+        for i in store.items.indices { store.items[i].order = i }
+        selectedId = blank.id
         editingId = blank.id
         editingText = ""
         DispatchQueue.main.async { focusedItemId = blank.id }
+    }
+
+    /// 回车：提交当前事项，并在其下方创建新事项进入编辑
+    private func commitAndCreateNext(_ item: TodoItem) {
+        let trimmed = editingText.trimmingCharacters(in: .whitespaces)
+        if trimmed.isEmpty {
+            store.items.removeAll { $0.id == item.id }
+            store.save()
+            editingId = nil
+            return
+        }
+        store.update(item, title: trimmed)
+        editingId = nil
+
+        if let blank = store.insertBlank(after: item) {
+            selectedId = blank.id
+            editingId = blank.id
+            editingText = ""
+            DispatchQueue.main.async { self.focusedItemId = blank.id }
+        }
     }
 
     private func commitEdit(_ item: TodoItem) {
@@ -256,21 +293,5 @@ struct StickyNoteView: View {
             store.save()
         }
         editingId = nil
-    }
-}
-
-// MARK: - 胶囊容器样式
-
-private extension View {
-    var pillContainer: some View {
-        self
-            .background(
-                RoundedRectangle(cornerRadius: 7)
-                    .fill(Color.primary.opacity(0.06))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 7)
-                    .strokeBorder(Color.primary.opacity(0.09), lineWidth: 0.5)
-            )
     }
 }

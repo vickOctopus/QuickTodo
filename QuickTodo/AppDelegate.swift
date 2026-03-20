@@ -12,6 +12,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var stickyPanel: NSPanel?
     let store = TodoStore()
     var isAlwaysOnTop: Bool = false
+    private var eventMonitor: Any?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 菜单栏图标
@@ -26,26 +27,43 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         popover = NSPopover()
         popover.contentSize = NSSize(width: 280, height: 360)
         popover.behavior = .transient
-        popover.contentViewController = NSHostingController(
+
+        let popoverVC = NSHostingController(
             rootView: PopoverView(store: store, onOpenStickyNote: { [weak self] in
                 self?.openStickyNote()
             })
         )
+        // 让 SwiftUI 的 ultraThinMaterial 透视到桌面
+        popoverVC.view.wantsLayer = true
+        popoverVC.view.layer?.backgroundColor = .clear
+        popover.contentViewController = popoverVC
     }
 
     // 菜单栏图标：只负责 popover 的开关，不直接唤起主页面
     @objc func togglePopover() {
         guard let button = statusItem.button else { return }
         if popover.isShown {
-            popover.performClose(nil)
+            closePopover()
         } else {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+            // 全局鼠标监听：点击 popover 外部时关闭
+            eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
+                self?.closePopover()
+            }
+        }
+    }
+
+    private func closePopover() {
+        popover.performClose(nil)
+        if let monitor = eventMonitor {
+            NSEvent.removeMonitor(monitor)
+            eventMonitor = nil
         }
     }
 
     // 唯一打开主页面的入口（由 popover 内「编辑」按钮触发）
     func openStickyNote() {
-        popover.performClose(nil)
+        closePopover()
 
         if let panel = stickyPanel {
             NSApp.activate(ignoringOtherApps: true)
@@ -63,6 +81,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         panel.title = ""
         panel.titleVisibility = .hidden
         panel.titlebarAppearsTransparent = true
+        panel.isOpaque = false
+        panel.backgroundColor = .clear
         panel.isFloatingPanel = true
         panel.hidesOnDeactivate = false
         panel.level = isAlwaysOnTop ? .floating : .normal
@@ -83,11 +103,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func updatePanelContent(_ panel: NSPanel) {
-        panel.contentView = NSHostingView(rootView: StickyNoteView(
+        let hostingView = NSHostingView(rootView: StickyNoteView(
             store: store,
             onToggleAlwaysOnTop: { [weak self] in self?.toggleAlwaysOnTop() },
             isAlwaysOnTop: isAlwaysOnTop
         ))
+        hostingView.wantsLayer = true
+        hostingView.layer?.backgroundColor = .clear
+        panel.contentView = hostingView
     }
 
     private func savedPanelFrame() -> NSRect {

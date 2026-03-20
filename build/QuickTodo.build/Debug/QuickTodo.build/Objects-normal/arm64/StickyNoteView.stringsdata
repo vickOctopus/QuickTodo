@@ -47,7 +47,7 @@
         "key": "取消始终显示在前方",
         "location": {
           "startingColumn": 43,
-          "startingLine": 103
+          "startingLine": 102
         }
       },
       {
@@ -55,7 +55,7 @@
         "key": "始终显示在前方",
         "location": {
           "startingColumn": 75,
-          "startingLine": 103
+          "startingLine": 102
         }
       },
       {
@@ -63,7 +63,7 @@
         "key": "删除待办事项",
         "location": {
           "startingColumn": 27,
-          "startingLine": 111
+          "startingLine": 110
         }
       },
       {
@@ -71,7 +71,7 @@
         "key": "新建待办事项",
         "location": {
           "startingColumn": 27,
-          "startingLine": 118
+          "startingLine": 117
         }
       },
       {
@@ -79,7 +79,7 @@
         "key": "",
         "location": {
           "startingColumn": 27,
-          "startingLine": 207
+          "startingLine": 205
         }
       }
     ]

@@ -71,5 +71,6 @@ struct PopoverView: View {
             .padding(.vertical, 10)
         }
         .frame(width: 280, height: 360)
+        .background(.ultraThinMaterial)
     }
 }

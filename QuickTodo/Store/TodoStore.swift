@@ -72,7 +72,23 @@ class TodoStore: ObservableObject {
     func toggle(_ item: TodoItem) {
         guard let idx = items.firstIndex(where: { $0.id == item.id }) else { return }
         items[idx].isCompleted.toggle()
+        // Auto-sort: uncompleted first, completed last (preserve relative order)
+        let uncompleted = items.filter { !$0.isCompleted }
+        let completed = items.filter { $0.isCompleted }
+        items = uncompleted + completed
+        for i in items.indices { items[i].order = i }
         save()
+    }
+
+    /// Insert a blank item immediately after the given item; normalizes orders but does NOT save.
+    @discardableResult
+    func insertBlank(after item: TodoItem) -> TodoItem? {
+        guard let idx = items.firstIndex(where: { $0.id == item.id }) else { return nil }
+        let insertAt = idx + 1
+        let blank = TodoItem(title: "", order: 0)
+        items.insert(blank, at: insertAt)
+        for i in items.indices { items[i].order = i }
+        return blank
     }
 
     func update(_ item: TodoItem, title: String) {
