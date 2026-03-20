@@ -1,8 +1,6 @@
 # QuickTodo
 
-一款轻量的 macOS 菜单栏待办事项应用，基于 SwiftUI + AppKit 开发。常驻菜单栏，无 Dock 图标，零打扰。
-
-A lightweight macOS menu bar to-do app built with SwiftUI + AppKit. Lives quietly in your menu bar — no Dock icon, no clutter.
+一款极度轻量的 macOS 菜单栏待办事项应用，基于 SwiftUI + AppKit 开发。常驻菜单栏，无 Dock 图标，零打扰。
 
 ---
 
@@ -25,23 +23,6 @@ A lightweight macOS menu bar to-do app built with SwiftUI + AppKit. Lives quietl
 | macOS | 26.2+ |
 | Xcode | 26.3+ |
 | Swift | 6.0 |
-
----
-
-## 安装 / Installation
-
-### 从源码构建
-
-1. 克隆仓库：
-   ```bash
-   git clone https://github.com/your-username/QuickTodo.git
-   cd QuickTodo
-   ```
-2. 用 Xcode 打开 `QuickTodo.xcodeproj`
-3. 选择目标设备为 **My Mac**
-4. 按 `Cmd+R` 构建并运行
-
-应用启动后将出现在菜单栏，不会在 Dock 中显示（`LSUIElement = YES`）。
 
 ---
 
