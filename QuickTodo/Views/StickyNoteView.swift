@@ -17,6 +17,7 @@ struct StickyNoteView: View {
     @State private var selectedId: UUID? = nil
     @FocusState private var focusedItemId: UUID?
     @State private var hoveredBtn: String? = nil
+    @State private var isCreatingNext: Bool = false
 
     var body: some View {
         List(selection: $selectedId) {
@@ -63,6 +64,7 @@ struct StickyNoteView: View {
             Button("取消", role: .cancel) {}
         }
         .onChange(of: focusedItemId) { _, newValue in
+            guard !isCreatingNext else { return }
             guard let prevId = editingId, newValue != prevId else { return }
             if let item = store.items.first(where: { $0.id == prevId }) {
                 commitEdit(item)
@@ -266,13 +268,19 @@ struct StickyNoteView: View {
             return
         }
         store.update(item, title: trimmed)
-        editingId = nil
+        isCreatingNext = true
 
         if let blank = store.insertBlank(after: item) {
             selectedId = blank.id
             editingId = blank.id
             editingText = ""
-            DispatchQueue.main.async { self.focusedItemId = blank.id }
+            DispatchQueue.main.async {
+                self.focusedItemId = blank.id
+                self.isCreatingNext = false
+            }
+        } else {
+            editingId = nil
+            isCreatingNext = false
         }
     }
 
