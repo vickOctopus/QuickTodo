@@ -7,103 +7,270 @@ import SwiftUI
 
 struct StickyNoteView: View {
     @ObservedObject var store: TodoStore
-    @State private var newTitle: String = ""
+    var onToggleAlwaysOnTop: (() -> Void)?
+    var isAlwaysOnTop: Bool = false
+
     @State private var editingId: UUID? = nil
     @State private var editingText: String = ""
+    @State private var isDeleteMode: Bool = false
+    @State private var showDeleteAllConfirm: Bool = false
+    @FocusState private var focusedItemId: UUID?
+    @State private var hoveredBtn: String? = nil
 
     var body: some View {
-        VStack(spacing: 0) {
-            // 顶部标题（拖动区域由 NSPanel 标题栏承担）
-            HStack {
-                Text("QuickTodo")
-                    .font(.headline)
-                    .foregroundColor(.primary.opacity(0.7))
-                Spacer()
-                Text("\(store.items.filter { !$0.isCompleted }.count) 未完成")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+        List {
+            ForEach(store.items) { item in
+                reminderRow(item)
             }
-            .padding(.horizontal, 14)
-            .padding(.top, 8)
-            .padding(.bottom, 6)
-
-            Divider()
-
-            // 待办列表
-            List {
-                ForEach(store.items) { item in
-                    stickyRow(item)
-                }
-                .onDelete { store.delete(at: $0) }
-                .onMove { store.move(from: $0, to: $1) }
-            }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
-            .background(Color.clear)
-
-            Divider()
-
-            // 新增输入框
-            HStack(spacing: 8) {
-                TextField("添加待办...", text: $newTitle)
-                    .textFieldStyle(.plain)
-                    .onSubmit { addItem() }
-                Button(action: addItem) {
-                    Image(systemName: "plus.circle.fill")
-                        .foregroundColor(newTitle.isEmpty ? .secondary : .accentColor)
-                }
-                .buttonStyle(.plain)
-                .disabled(newTitle.isEmpty)
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
+            .onMove { store.move(from: $0, to: $1) }
         }
-        .background(Color(NSColor(red: 1.0, green: 0.97, blue: 0.75, alpha: 1.0)))
-        .frame(minWidth: 240, minHeight: 300)
+        .listStyle(.plain)
+        .overlay {
+            if store.items.isEmpty {
+                VStack(spacing: 8) {
+                    Image(systemName: "checkmark.circle")
+                        .font(.system(size: 36))
+                        .foregroundColor(.secondary.opacity(0.4))
+                    Text("暂无待办事项")
+                        .foregroundColor(.secondary)
+                        .font(.callout)
+                }
+            }
+        }
+        .safeAreaInset(edge: .top, spacing: 0) {
+            VStack(spacing: 0) {
+                toolbar.frame(height: 28)
+                Divider()
+            }
+            .background(.windowBackground)
+        }
+        .ignoresSafeArea()
+        .frame(minWidth: 260, minHeight: 320)
+        .confirmationDialog(
+            "确定删除所有待办事项吗？",
+            isPresented: $showDeleteAllConfirm,
+            titleVisibility: .visible
+        ) {
+            Button("全部删除", role: .destructive) {
+                store.deleteAll()
+                isDeleteMode = false
+            }
+            Button("取消", role: .cancel) {}
+        }
+        .onChange(of: focusedItemId) { _, newValue in
+            guard let prevId = editingId, newValue != prevId else { return }
+            if let item = store.items.first(where: { $0.id == prevId }) {
+                commitEdit(item)
+            }
+        }
+        // Cmd+Z 撤回删除（window 级别，无需焦点）
+        .background {
+            Button("") { store.undoLastDelete() }
+                .keyboardShortcut("z", modifiers: .command)
+                .hidden()
+        }
     }
 
+    // MARK: - 工具栏
+
     @ViewBuilder
-    private func stickyRow(_ item: TodoItem) -> some View {
-        HStack(spacing: 8) {
-            Button(action: { store.toggle(item) }) {
-                Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(item.isCompleted ? .green : .secondary)
+    private var toolbar: some View {
+        HStack(spacing: 0) {
+            // 左侧留出红绿灯空间
+            Spacer().frame(width: 72)
+            Spacer()
+
+            if isDeleteMode {
+                // 删除模式：「全部删除 | 完成」胶囊组
+                HStack(spacing: 0) {
+                    textPillBtn("deleteAll", title: "全部删除", color: .red) {
+                        showDeleteAllConfirm = true
+                    }
+                    pillDivider
+                    textPillBtn("done", title: "完成", color: .accentColor) {
+                        isDeleteMode = false
+                    }
+                }
+                .pillContainer
+            } else {
+                // 普通模式：「pin | trash | +」图标胶囊组
+                HStack(spacing: 0) {
+                    iconPillBtn("pin",
+                                icon: isAlwaysOnTop ? "pin.fill" : "pin",
+                                color: isAlwaysOnTop ? .accentColor : .secondary) {
+                        onToggleAlwaysOnTop?()
+                    }
+                    .help(isAlwaysOnTop ? "取消始终显示在前方" : "始终显示在前方")
+
+                    pillDivider
+
+                    iconPillBtn("trash", icon: "trash") {
+                        isDeleteMode = true
+                        editingId = nil
+                    }
+                    .help("删除待办事项")
+
+                    pillDivider
+
+                    iconPillBtn("plus", icon: "plus") {
+                        addBlankAndEdit()
+                    }
+                    .help("新建待办事项")
+                }
+                .pillContainer
             }
-            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 10)
+    }
+
+    // 图标按钮（带 hover 高亮）
+    @ViewBuilder
+    private func iconPillBtn(_ id: String, icon: String,
+                              color: Color = .secondary,
+                              action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: icon)
+                .font(.system(size: 11.5, weight: .regular))
+                .foregroundColor(hoveredBtn == id ? .primary : color)
+                .frame(width: 28, height: 22)
+                .background(
+                    hoveredBtn == id
+                        ? Color.primary.opacity(0.1)
+                        : Color.clear,
+                    in: RoundedRectangle(cornerRadius: 5)
+                )
+        }
+        .buttonStyle(.plain)
+        .onHover { on in
+            if on { hoveredBtn = id } else if hoveredBtn == id { hoveredBtn = nil }
+        }
+    }
+
+    // 文字按钮（带 hover 高亮）
+    @ViewBuilder
+    private func textPillBtn(_ id: String, title: String,
+                              color: Color,
+                              action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.system(size: 12))
+                .foregroundColor(hoveredBtn == id ? color.opacity(0.75) : color)
+                .padding(.horizontal, 10)
+                .frame(height: 22)
+                .background(
+                    hoveredBtn == id
+                        ? Color.primary.opacity(0.07)
+                        : Color.clear,
+                    in: RoundedRectangle(cornerRadius: 5)
+                )
+        }
+        .buttonStyle(.plain)
+        .onHover { on in
+            if on { hoveredBtn = id } else if hoveredBtn == id { hoveredBtn = nil }
+        }
+    }
+
+    // 胶囊内分隔线
+    private var pillDivider: some View {
+        Rectangle()
+            .fill(Color.primary.opacity(0.1))
+            .frame(width: 0.5)
+            .padding(.vertical, 5)
+    }
+
+    // MARK: - 列表行
+
+    @ViewBuilder
+    private func reminderRow(_ item: TodoItem) -> some View {
+        HStack(spacing: 10) {
+            if isDeleteMode {
+                Button(action: {
+                    if let idx = store.items.firstIndex(where: { $0.id == item.id }) {
+                        store.delete(at: IndexSet(integer: idx))
+                    }
+                }) {
+                    Image(systemName: "minus.circle.fill")
+                        .font(.system(size: 18))
+                        .foregroundColor(.red)
+                }
+                .buttonStyle(.plain)
+            } else {
+                Button(action: { store.toggle(item) }) {
+                    Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
+                        .font(.system(size: 18))
+                        .foregroundColor(item.isCompleted ? .accentColor : Color(NSColor.tertiaryLabelColor))
+                }
+                .buttonStyle(.plain)
+            }
 
             if editingId == item.id {
                 TextField("", text: $editingText)
                     .textFieldStyle(.plain)
+                    .disableAutocorrection(true)
+                    .focused($focusedItemId, equals: item.id)
                     .onSubmit { commitEdit(item) }
-                    .onExitCommand { editingId = nil }
+                    .onExitCommand { discardIfBlank(item) }
             } else {
                 Text(item.title)
-                    .strikethrough(item.isCompleted)
-                    .foregroundColor(item.isCompleted ? .secondary : .primary)
+                    .strikethrough(item.isCompleted && !isDeleteMode, color: .secondary)
+                    .foregroundColor(item.isCompleted && !isDeleteMode ? .secondary : .primary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .onTapGesture(count: 2) {
+                        guard !isDeleteMode else { return }
                         editingId = item.id
                         editingText = item.title
+                        DispatchQueue.main.async { focusedItemId = item.id }
                     }
             }
         }
-        .padding(.vertical, 2)
-        .listRowBackground(Color.clear)
-        .listRowSeparator(.hidden)
+        .padding(.vertical, 3)
+        .listRowSeparator(.visible)
+        .listRowInsets(EdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 14))
     }
 
-    private func addItem() {
-        let trimmed = newTitle.trimmingCharacters(in: .whitespaces)
-        guard !trimmed.isEmpty else { return }
-        store.add(title: trimmed)
-        newTitle = ""
+    // MARK: - 操作
+
+    private func addBlankAndEdit() {
+        let nextOrder = (store.items.map(\.order).max() ?? -1) + 1
+        let blank = TodoItem(title: "", order: nextOrder)
+        store.items.append(blank)
+        editingId = blank.id
+        editingText = ""
+        DispatchQueue.main.async { focusedItemId = blank.id }
     }
 
     private func commitEdit(_ item: TodoItem) {
         let trimmed = editingText.trimmingCharacters(in: .whitespaces)
-        if !trimmed.isEmpty {
+        if trimmed.isEmpty {
+            store.items.removeAll { $0.id == item.id }
+        } else {
             store.update(item, title: trimmed)
         }
+        store.save()
         editingId = nil
+    }
+
+    private func discardIfBlank(_ item: TodoItem) {
+        if item.title.isEmpty {
+            store.items.removeAll { $0.id == item.id }
+            store.save()
+        }
+        editingId = nil
+    }
+}
+
+// MARK: - 胶囊容器样式
+
+private extension View {
+    var pillContainer: some View {
+        self
+            .background(
+                RoundedRectangle(cornerRadius: 7)
+                    .fill(Color.primary.opacity(0.06))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 7)
+                    .strokeBorder(Color.primary.opacity(0.09), lineWidth: 0.5)
+            )
     }
 }

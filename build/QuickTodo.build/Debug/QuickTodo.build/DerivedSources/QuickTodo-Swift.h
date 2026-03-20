@@ -314,6 +314,7 @@ SWIFT_CLASS("_TtC9QuickTodo11AppDelegate")
 @end
 
 @interface AppDelegate (SWIFT_EXTENSION(QuickTodo)) <NSWindowDelegate>
+- (void)windowDidBecomeKey:(NSNotification * _Nonnull)notification;
 - (void)windowDidMove:(NSNotification * _Nonnull)notification;
 - (void)windowWillClose:(NSNotification * _Nonnull)notification;
 @end
@@ -642,6 +643,7 @@ SWIFT_CLASS("_TtC9QuickTodo11AppDelegate")
 @end
 
 @interface AppDelegate (SWIFT_EXTENSION(QuickTodo)) <NSWindowDelegate>
+- (void)windowDidBecomeKey:(NSNotification * _Nonnull)notification;
 - (void)windowDidMove:(NSNotification * _Nonnull)notification;
 - (void)windowWillClose:(NSNotification * _Nonnull)notification;
 @end

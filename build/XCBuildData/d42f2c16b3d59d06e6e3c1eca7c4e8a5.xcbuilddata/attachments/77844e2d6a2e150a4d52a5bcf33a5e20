@@ -1,0 +1,99 @@
+{
+  "" : {
+    "diagnostics" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodo-primary.dia",
+    "emit-module-dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodo-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodo-primary-emit-module.dia",
+    "pch" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodo-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodo-primary.swiftdeps"
+  },
+  "/Users/wangsongquan/DevProject/QuickTodo/QuickTodo/AppDelegate.swift" : {
+    "const-values" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/AppDelegate.swiftconstvalues",
+    "dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/AppDelegate.d",
+    "diagnostics" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/AppDelegate.dia",
+    "index-unit-output-path" : "/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/AppDelegate.o",
+    "llvm-bc" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/AppDelegate.bc",
+    "object" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/AppDelegate.o",
+    "swift-dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/AppDelegate.swiftdeps",
+    "swiftmodule" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/AppDelegate~partial.swiftmodule"
+  },
+  "/Users/wangsongquan/DevProject/QuickTodo/QuickTodo/ContentView.swift" : {
+    "const-values" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/wangsongquan/DevProject/QuickTodo/QuickTodo/Models/TodoItem.swift" : {
+    "const-values" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoItem.swiftconstvalues",
+    "dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoItem.d",
+    "diagnostics" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoItem.dia",
+    "index-unit-output-path" : "/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoItem.o",
+    "llvm-bc" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoItem.bc",
+    "object" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoItem.o",
+    "swift-dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoItem.swiftdeps",
+    "swiftmodule" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoItem~partial.swiftmodule"
+  },
+  "/Users/wangsongquan/DevProject/QuickTodo/QuickTodo/QuickTodoApp.swift" : {
+    "const-values" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodoApp.swiftconstvalues",
+    "dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodoApp.d",
+    "diagnostics" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodoApp.dia",
+    "index-unit-output-path" : "/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodoApp.o",
+    "llvm-bc" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodoApp.bc",
+    "object" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodoApp.o",
+    "swift-dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodoApp.swiftdeps",
+    "swiftmodule" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/QuickTodoApp~partial.swiftmodule"
+  },
+  "/Users/wangsongquan/DevProject/QuickTodo/QuickTodo/Store/TodoStore.swift" : {
+    "const-values" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoStore.swiftconstvalues",
+    "dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoStore.d",
+    "diagnostics" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoStore.dia",
+    "index-unit-output-path" : "/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoStore.o",
+    "llvm-bc" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoStore.bc",
+    "object" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoStore.o",
+    "swift-dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoStore.swiftdeps",
+    "swiftmodule" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoStore~partial.swiftmodule"
+  },
+  "/Users/wangsongquan/DevProject/QuickTodo/QuickTodo/Views/PopoverView.swift" : {
+    "const-values" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/PopoverView.swiftconstvalues",
+    "dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/PopoverView.d",
+    "diagnostics" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/PopoverView.dia",
+    "index-unit-output-path" : "/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/PopoverView.o",
+    "llvm-bc" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/PopoverView.bc",
+    "object" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/PopoverView.o",
+    "swift-dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/PopoverView.swiftdeps",
+    "swiftmodule" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/PopoverView~partial.swiftmodule"
+  },
+  "/Users/wangsongquan/DevProject/QuickTodo/QuickTodo/Views/StickyNoteView.swift" : {
+    "const-values" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/StickyNoteView.swiftconstvalues",
+    "dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/StickyNoteView.d",
+    "diagnostics" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/StickyNoteView.dia",
+    "index-unit-output-path" : "/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/StickyNoteView.o",
+    "llvm-bc" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/StickyNoteView.bc",
+    "object" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/StickyNoteView.o",
+    "swift-dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/StickyNoteView.swiftdeps",
+    "swiftmodule" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/StickyNoteView~partial.swiftmodule"
+  },
+  "/Users/wangsongquan/DevProject/QuickTodo/QuickTodo/Views/TodoRowView.swift" : {
+    "const-values" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoRowView.swiftconstvalues",
+    "dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoRowView.d",
+    "diagnostics" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoRowView.dia",
+    "index-unit-output-path" : "/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoRowView.o",
+    "llvm-bc" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoRowView.bc",
+    "object" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoRowView.o",
+    "swift-dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoRowView.swiftdeps",
+    "swiftmodule" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/TodoRowView~partial.swiftmodule"
+  },
+  "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/wangsongquan/DevProject/QuickTodo/build/QuickTodo.build/Debug/QuickTodo.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  }
+}

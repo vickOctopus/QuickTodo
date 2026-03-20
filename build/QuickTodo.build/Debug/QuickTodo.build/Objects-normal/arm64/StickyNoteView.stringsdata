@@ -4,26 +4,74 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "QuickTodo",
+        "key": "确定删除所有待办事项吗？",
         "location": {
-          "startingColumn": 22,
-          "startingLine": 18
+          "startingColumn": 13,
+          "startingLine": 50
         }
       },
       {
         "comment": "",
-        "key": "%lld 未完成",
+        "key": "暂无待办事项",
         "location": {
-          "startingColumn": 22,
-          "startingLine": 22
+          "startingColumn": 26,
+          "startingLine": 34
         }
       },
       {
         "comment": "",
-        "key": "添加待办...",
+        "key": "全部删除",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "取消",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "取消始终显示在前方",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "始终显示在前方",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "删除待办事项",
         "location": {
           "startingColumn": 27,
-          "startingLine": 48
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "新建待办事项",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 118
         }
       },
       {
@@ -31,7 +79,7 @@
         "key": "",
         "location": {
           "startingColumn": 27,
-          "startingLine": 75
+          "startingLine": 207
         }
       }
     ]

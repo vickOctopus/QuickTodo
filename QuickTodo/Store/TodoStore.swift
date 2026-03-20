@@ -11,6 +11,10 @@ class TodoStore: ObservableObject {
     @Published var items: [TodoItem] = []
 
     private let key = "todo_items"
+    // 每个元素是一批被删除的事项（支持"全部删除"整批撤回）
+    private var undoStack: [[TodoItem]] = []
+
+    var canUndo: Bool { !undoStack.isEmpty }
 
     init() {
         load()
@@ -34,7 +38,24 @@ class TodoStore: ObservableObject {
     }
 
     func delete(at offsets: IndexSet) {
+        let deleted = offsets.sorted().map { items[$0] }
+        undoStack.append(deleted)
         offsets.sorted().reversed().forEach { items.remove(at: $0) }
+        save()
+    }
+
+    func deleteAll() {
+        guard !items.isEmpty else { return }
+        undoStack.append(items)
+        items.removeAll()
+        save()
+    }
+
+    func undoLastDelete() {
+        guard let batch = undoStack.popLast() else { return }
+        // 将撤回的事项合并回列表，按原 order 排序
+        items.append(contentsOf: batch)
+        items.sort { $0.order < $1.order }
         save()
     }
 
